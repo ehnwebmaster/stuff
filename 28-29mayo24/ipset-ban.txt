@@ -1358,14 +1358,12 @@ ipset add ban 243.152.19.156
 ipset add ban 243.224.145.42
 ipset add ban 243.255.51.168
 ipset add ban 244.127.204.122
-ipset add ban 244.147.51.96
 ipset add ban 244.161.109.254
 ipset add ban 244.191.11.71
 ipset add ban 245.37.148.66
 ipset add ban 245.81.229.169
 ipset add ban 245.100.105.161
 ipset add ban 245.187.21.79
-ipset add ban 246.23.3.219
 ipset add ban 246.34.3.22
 ipset add ban 246.68.28.219
 ipset add ban 246.128.50.119
@@ -1387,7 +1385,6 @@ ipset add ban 248.174.153.15
 ipset add ban 248.238.96.57
 ipset add ban 248.244.101.10
 ipset add ban 248.247.71.84
-ipset add ban 249.11.139.212
 ipset add ban 249.25.157.40
 ipset add ban 249.34.19.141
 ipset add ban 249.34.197.129
@@ -1405,7 +1402,6 @@ ipset add ban 250.92.68.243
 ipset add ban 250.97.126.102
 ipset add ban 250.107.77.252
 ipset add ban 250.218.65.249
-ipset add ban 251.22.32.201
 ipset add ban 251.114.131.244
 ipset add ban 251.145.196.77
 ipset add ban 251.211.116.71
@@ -1427,8 +1423,6 @@ ipset add ban 253.202.127.133
 ipset add ban 253.218.110.168
 ipset add ban 253.239.209.2
 ipset add ban 254.52.150.229
-ipset add ban 254.101.34.220
-ipset add ban 254.229.101.38
 ipset add ban 255.39.136.63
 ipset add ban 255.107.207.140
 ipset add ban 255.215.197.118
