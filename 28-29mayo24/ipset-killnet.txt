@@ -15449,7 +15449,9 @@ ipset add killnet 185.6.152.132
 ipset add killnet 212.110.188.193
 ipset add killnet 158.220.91.231
 ipset add killnet 94.72.103.163
-ipset add killnet 144.21.52.220
+# Tor from Oracle
+#ipset add killnet 144.21.52.220
+# but also 44.21.52.220:3128	HTTPS (Squid)
 ipset add killnet 144.21.53.111
 ipset add killnet 46.250.254.74
 ipset add killnet 89.213.230.50
