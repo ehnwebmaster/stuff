@@ -1,0 +1,817 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: rules30s
+      folder: rules
+      interval: 30s
+      rules:
+        - uid: ce0xw3r63atq8c
+          title: "\U0001F6E0️ CPU Load Average 1m > 2"
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                disableTextWrap: false
+                editorMode: builder
+                expr: node_load1
+                fullMetaSearch: false
+                includeNullMetadata: true
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+                useBackend: false
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 2
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations: {}
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: be0xx1u22eccge
+          title: Apache Server Load > 1.40
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                disableTextWrap: false
+                editorMode: builder
+                expr: apache_load{interval="1min"}
+                fullMetaSearch: false
+                includeNullMetadata: true
+                instant: true
+                intervalMs: 10000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+                useBackend: false
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1.4
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations: {}
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: be0yeu47va1a8e
+          title: "\U0001F4E1 Mucho tráfico OUT > 600MB/s"
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                editorMode: code
+                expr: sum by (instance) (rate(node_network_transmit_bytes_total[1m])) / 1024 / 1024
+                instant: true
+                intervalMs: 10000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 60
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: ae0yfkh2q8ohsf
+          title: Apache Response Time
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                editorMode: code
+                exemplar: true
+                expr: sum(rate(apache_duration_ms_total{instance=~"localhost:9117"}[1m])) / sum(rate(apache_accesses_total{instance=~"localhost:9117"}[1m]))
+                format: time_series
+                instant: true
+                interval: ""
+                intervalFactor: 1
+                intervalMs: 15000
+                legendFormat: Time
+                maxDataPoints: 43200
+                range: false
+                refId: A
+                step: 240
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0.09
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: Jc1gx9hVk
+          panelId: 1
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            __dashboardUid__: Jc1gx9hVk
+            __panelId__: "1"
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: fe0zcct15wp34f
+          title: Mucho tráfico IN > 600MB/s
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                editorMode: code
+                expr: sum by (instance) (rate(node_network_receive_bytes_total[1m])) / 1024 / 1024
+                instant: true
+                intervalMs: 10000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 60
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: ae0zgn59v0ruoe
+          title: "\U0001F525 CPU Temperature Router +65º"
+          condition: B
+          data:
+            - refId: CPU
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: adzvde9z38cg0a
+              model:
+                datasource:
+                    type: influxdb
+                    uid: adzvde9z38cg0a
+                groupBy:
+                    - params:
+                        - $__interval
+                      type: time
+                    - params:
+                        - "null"
+                      type: fill
+                intervalMs: 10000
+                maxDataPoints: 43200
+                orderByTime: ASC
+                policy: default
+                query: "from(bucket: \"RedesZoneBUCKET\")\r\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n    |> filter(fn: (r) =>\r\n        r._measurement == \"router_asus\" and\r\n        r._field == \"temp_CPU\"        \r\n        )\r\n//    |> drop(columns: [\"container_version\", \"engine_host\", \"host\", \"server_version\"])\r\n    //|> aggregateWindow(every: 5m, fn: mean)\r\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n    |> yield(name: \"mean\")"
+                refId: CPU
+                resultFormat: time_series
+                select:
+                    - - params:
+                            - value
+                        type: field
+                      - params: []
+                        type: mean
+                tags: []
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params: []
+                      reducer:
+                        params: []
+                        type: avg
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: CPU
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: A
+                type: reduce
+            - refId: B
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 65
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params: []
+                      reducer:
+                        params: []
+                        type: avg
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: B
+                type: threshold
+          dashboardUid: jY_JZIlGz
+          panelId: 37
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            __dashboardUid__: jY_JZIlGz
+            __panelId__: "37"
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: ce0zkl6b8piwwf
+          title: ⚡NF Conntrack > 20k
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                expr: node_nf_conntrack_entries{instance="localhost:9100",job="node_exporter"}
+                format: time_series
+                interval: ""
+                intervalFactor: 1
+                intervalMs: 15000
+                legendFormat: NF conntrack entries
+                maxDataPoints: 43200
+                refId: A
+                step: 240
+            - refId: B
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 20000
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: publicok
+          panelId: 61
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            __dashboardUid__: publicok
+            __panelId__: "61"
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: be11xgopyuvb4d
+          title: MySQL Too much connections 60%
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                editorMode: code
+                expr: max_over_time(mysql_global_status_threads_connected[1m]) / (mysql_global_variables_max_connections * 100)
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 60
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: fe1235gx41czke
+          title: MySQL Slow Queries
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                editorMode: code
+                expr: mysql_global_status_slow_queries[1m]
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 50
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+            - refId: B
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params: []
+                      reducer:
+                        params: []
+                        type: avg
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                hide: false
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: de128sontu29sc
+          title: MySQL QPS > 400s
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                editorMode: code
+                expr: rate(mysql_global_status_questions[1m])
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 400
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations: {}
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: ce12wohr1m51cd
+          title: Cloudflare http 5xx error rate
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                disableTextWrap: false
+                editorMode: code
+                expr: increase(cloudflare_zone_requests_status{status=~"^5.."}[5m])
+                fullMetaSearch: false
+                includeNullMetadata: true
+                instant: true
+                intervalMs: 15000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+                useBackend: false
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 10
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations: {}
+          labels: {}
+          isPaused: true
+          notification_settings:
+            receiver: grafana-default-email
+        - uid: be12xj80cqmf4c
+          title: Rate limiting rules 429 CloudFLare
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: de05xuoi6cav4b
+              model:
+                datasource:
+                    type: prometheus
+                    uid: de05xuoi6cav4b
+                disableTextWrap: false
+                editorMode: code
+                expr: increase(cloudflare_zone_requests_status{status="429"}[2m])
+                fullMetaSearch: false
+                includeNullMetadata: true
+                instant: true
+                intervalMs: 60000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+                useBackend: false
+            - refId: C
+              relativeTimeRange:
+                from: 60
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 15
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          isPaused: true
+          notification_settings:
+            receiver: grafana-default-email
