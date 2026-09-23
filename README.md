@@ -2,7 +2,7 @@
 
 # List of DDoS attacks
 
-**Automatically report banned IPs from fail2ban and CloudFlare WAF from [elhacker.NET](https://elhacker.net)**
+**Automatically reported banned IPs from fail2ban and CloudFlare WAF from [elhacker.NET](https://elhacker.net)**
 
 
 </div>
