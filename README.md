@@ -1,6 +1,6 @@
 <div align="center">
 
-# List of attackers DDoS
+# List of DDoS attacks
 
 **Automatically report banned IPs from fail2ban and CloudFlare WAF from [elhacker.NET](https://elhacker.net)**
 
@@ -19,7 +19,7 @@ https://github.com/ehnwebmaster/stuff/blob/main/ips_bloqueadas.txt
 Auto-update **fail2ban** blocklist
 https://github.com/ehnwebmaster/stuff/blob/main/fail2ban-drops.txt
 
-Works with **iptables** or ipset — Linux, OPnsense, etc
+Works with **iptables** or ipset — Linux, OPnsense, etc (use drop or reject)
 
 ### How It Works
 
@@ -33,7 +33,7 @@ Attacker → fail2ban or CloudFlare from WAF detects abuse → updates the two l
 
 
 
-## The two lists
+## The two ban lists
 
 - ```https://github.com/ehnwebmaster/stuff/blob/main/fail2ban-drops.txt```
 - ```https://github.com/ehnwebmaster/stuff/blob/main/ips_bloqueadas.txt```
