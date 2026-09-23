@@ -47,6 +47,6 @@ https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/fail2ban-dr
 ```
 
 ```bash
-https://github.com/ehnwebmaster/stuff/blob/main/ips_bloqueadas.tx
+https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/ips_bloqueadas.txt
 ```
 
