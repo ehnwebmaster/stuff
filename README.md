@@ -27,7 +27,7 @@ Works with **iptables** or ipset — Linux, OPnsense, etc (use drop or reject)
 Attacker → fail2ban or CloudFlare from WAF detects abuse → updates the two lists every x minutes
 ```
 
-1. **WAF CloudFlare** detects events from the firewall CloudFlare using API GraphQL including layer 7 DDoS, Rate Limit and WAF events (excluding IP's from Tor)
+1. **WAF CloudFlare** detects events from the firewall CloudFlare using API GraphQL including layer 7 DDoS, Rate Limit and WAF events (excluding IP's from Tor and 10 or more hits)
 2. **fail2ban** detects too much pettitions in short range of time or 404 pettitions from our web server
 
 
