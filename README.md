@@ -46,12 +46,14 @@ CloudFlare Firewall WAF
 
 Just copy download raw link
 
+Fail2ban 
+
 ```bash
 https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/fail2ban-drops.txt
 ```
 Remember the CloudFlare WAF List contains the IP's sorted from more abusive (more hits on top) to less abusive (less hits at bottom)
 
-Only IPv4, we remove the IPv6 IP's
+WAF: Only IPv4, we remove the IPv6 IP's
 
 ```bash
 https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/ips_bloqueadas.txt
