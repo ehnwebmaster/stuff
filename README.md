@@ -33,29 +33,30 @@ Attacker → fail2ban or CloudFlare from WAF detects abuse → updates the two l
 
 ## The two ban lists
 
-Fail2Ban
-- ```https://github.com/ehnwebmaster/stuff/blob/main/fail2ban-drops.txt```
-
 CloudFlare Firewall WAF
 - ```https://github.com/ehnwebmaster/stuff/blob/main/ips_bloqueadas.txt```
+
+Fail2Ban
+- ```https://github.com/ehnwebmaster/stuff/blob/main/fail2ban-drops.txt```
 
 
 ## Download
 
 Just copy the download raw link:
 
-a) Fail2ban 
 
-```bash
-https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/fail2ban-drops.txt
-```
-
-b) WAF: Only IPv4, we remove the IPv6 IP's, no more than 10K Ip's
+a) _WAF_: Only IPv4, we remove the IPv6 IP's, no more than 10K Ip's
 
 Remember the CloudFlare WAF List contains the IP's sorted from more abusive (more hits on top) to less abusive (less hits at bottom)
 
 ```bash
 https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/ips_bloqueadas.txt
+```
+
+b) _Fail2ban_
+
+```bash
+https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/fail2ban-drops.txt
 ```
 
 ## Examples (How to use it)
