@@ -115,6 +115,8 @@ And then:
 
 CloudFlare -> Manage Account -> Configurations -> Lists
 
+Create custom List and:
+
 `Copy - Paste all the IP's`
 
 Example expression WAF:
