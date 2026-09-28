@@ -13,13 +13,13 @@
 
 Two lists:
 
-Auto-update **WAF CloudFlare** blocklist last 24 hours
+Auto-update **WAF CloudFlare** blocklist last 24 hours updated every 4 minutes
 https://github.com/ehnwebmaster/stuff/blob/main/ips_bloqueadas.txt
 
 Auto-update **fail2ban** blocklist
 https://github.com/ehnwebmaster/stuff/blob/main/fail2ban-drops.txt
 
-Works with **iptables** or ipset — Linux, OPnsense, etc (use drop or reject)
+Works with **ipset** (iptables) — Linux, OPnsense, etc (use drop or reject) or CloudFlare Lists
 
 ### How It Works
 
@@ -29,8 +29,6 @@ Attacker → fail2ban or CloudFlare from WAF detects abuse → updates the two l
 
 1. **WAF CloudFlare** detects events from the firewall CloudFlare using API GraphQL including layer 7 DDoS, Rate Limit and WAF events including custom rules (excluding IP's from Tor and 10 or more hits and sorted by hits)
 2. **fail2ban** detects too much pettitions in short range of time or 404 pettitions from our web server
-
-
 
 
 ## The two ban lists
@@ -53,9 +51,68 @@ https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/fail2ban-dr
 ```
 Remember the CloudFlare WAF List contains the IP's sorted from more abusive (more hits on top) to less abusive (less hits at bottom)
 
-WAF: Only IPv4, we remove the IPv6 IP's
+WAF: Only IPv4, we remove the IPv6 IP's, no more than 10K Ip's
 
 ```bash
 https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/ips_bloqueadas.txt
 ```
+
+## Examples (How to use it)
+
+Example ipset:
+
+```
+sudo ipset create blocked hash:net maxelem 10000
+curl -s https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/ips_bloqueadas.txt | \
+grep -E -v '^(#|$)' | \
+sed 's/^/add blocked /' | \
+sudo ipset restore
+```
+
+Cronjob for updates:
+
+> /usr/local/bin/update_blocked_ips.sh
+
+```
+#!/bin/bash
+
+URL="https://raw.githubusercontent.com/ehnwebmaster/stuff/refs/heads/main/ips_bloqueadas.txt"
+SET_NAME="blocked"
+TEMP_SET_NAME="blocked"
+
+# 1. Crear el conjunto temporal si no existe y limpiarlo
+ipset create $TEMP_SET_NAME hash:net maxelem 10000 -exist
+ipset flush $TEMP_SET_NAME
+
+# 2. Cargar las IPs en el conjunto temporal
+curl -s "$URL" | grep -E -v '^(#|$)' | sed "s/^/add $TEMP_SET_NAME /" | ipset restore
+
+# 3. Crear el conjunto principal si no existe
+ipset create $SET_NAME hash:net maxelem 1000 -exist
+
+# 4. Asegurar la regla de iptables
+iptables -C INPUT -m set --match-set $SET_NAME src -j DROP 2>/dev/null || \
+iptables -I INPUT -m set --match-set $SET_NAME src -j DROP
+
+# 5. Intercambiar de forma atómica la lista vieja por la nueva
+ipset swap $TEMP_SET_NAME $SET_NAME
+
+# 6. Eliminar la lista temporal
+ipset destroy $TEMP_SET_NAME
+
+echo "[$(date)] Lista de IPs bloqueadas actualizada con éxito."
+```
+
+And then:
+
+> sudo iptables -I INPUT -m set --match-set blocked src -j DROP
+
+CloudFlare -> Manage Account -> Configurations -> Lists
+
+`Copy - Paste all the IP's`
+
+Example expression WAF:
+
+> (ip.src in $list)
+
 
