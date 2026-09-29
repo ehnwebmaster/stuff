@@ -125,3 +125,9 @@ Example expression WAF:
 
 And choose action: Managed Challange or Block
 
+
+
+<a href="https://www.abuseipdb.com/user/52197" target="_blank" title="AbuseIPDB is an IP address blacklist for webmasters and sysadmins to report IP addresses engaging in abusive behavior on their networks">
+  <img src="https://www.abuseipdb.com/contributor/52197.svg" alt="AbuseIPDB Contributor Badge" style="width: 401px;">
+</a>
+
