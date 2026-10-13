@@ -438,7 +438,9 @@ function smf_db_error($db_string, $connection = null)
 		{
 			if ($query_errno == 1030 && strpos($query_error, ' 127 ') !== false)
 			{
-				preg_match_all("#(?:[\\n\\r]|^)[^']+(?:FROM|JOIN|UPDATE|TABLE) ((?:[^\\n\\r(]+(?:, )?)*)#s", $db_string, $matches);
+				//preg_match_all("#(?:[\\n\\r]|^)[^']+(?:FROM|JOIN|UPDATE|TABLE) ((?:[^\\n\\r(]+(?:, )?)*)#s", $db_string, $matches);
+				//preg_match_all('~(?:[\n\r]|^)[^\']+?(?:FROM|JOIN|UPDATE|TABLE) ((?:[^\n\r(]+?(?:, )?)*)~s', $db_string, $matches);
+				preg_match_all("#(?:[\n\r]|^)[^']+(?:FROM|JOIN|UPDATE|TABLE) ((?:[^\n\r(]+(?:, )?)*)#s", $db_string, $matches);
 
 				$fix_tables = array();
 				foreach ($matches[1] as $tables)
@@ -455,11 +457,13 @@ function smf_db_error($db_string, $connection = null)
 			}
 			elseif ($query_errno == 1016)
 			{
-				if (preg_match("#'([^.]+)'#", $query_error, $match) != 0)$fix_tables = array('`' . $match[1] . '`');
+				//if (preg_match("#'([^.]+)'#", $query_error, $match) != 0)$fix_tables = array('`' . $match[1] . '`');
+				if (preg_match("#'([^.]+)'#", $query_error, $match) != 0)
 			}
 			elseif ($query_errno == 1034 \vert{}\vert{}$query_errno == 1035)
 			{
-				preg_match("#'([^']+)'#", $query_error, $match);$fix_tables = array('`' . $match[1] . '`');
+				//preg_match("#'([^']+)'#", $query_error, $match);$fix_tables = array('`' . $match[1] . '`');
+				preg_match("#'([^']+)'#", $query_error, $match);
 			}
 		}
 
